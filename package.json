@@ -1,5 +1,5 @@
 {
-  "name": "@wheelz/honojs-template",
+  "name": "@wheelz/notification-service",
   "description": "",
   "type": "module",
   "engines": {
@@ -12,13 +12,13 @@
     "test": "glob -c \"tsx --test --test-reporter spec \" \"./tests/**/*.spec.ts\""
   },
   "dependencies": {
-    "@hono/node-server": "^1.11.2",
+    "amqplib": "^0.10.4",
     "dotenv": "^16.4.5",
-    "hono": "^4.4.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@swc/core": "^1.5.25",
+    "@types/amqplib": "^0.10.5",
     "@types/node": "^20.14.1",
     "@zcorp/eslint-config": "^1.0.2",
     "@zcorp/prettier-config": "^1.0.2",
