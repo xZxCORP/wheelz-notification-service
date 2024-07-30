@@ -1,1 +1,2 @@
-import { config } from './config.js'
+import { runApplication } from './app.js'
+runApplication()

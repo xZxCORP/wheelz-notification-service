@@ -1,8 +1,8 @@
 import amqp from 'amqplib'
 
-import { MessageQueue } from '../application/message-queue.abstract.js'
+import { AbstractMessageQueue } from '../application/message-queue.abstract.js'
 
-export class RabbitMQMessageQueue implements MessageQueue {
+export class RabbitMQMessageQueue implements AbstractMessageQueue {
   private connection: amqp.Connection | undefined = undefined
   private channel: amqp.Channel | undefined = undefined
 
