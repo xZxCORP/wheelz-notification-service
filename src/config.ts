@@ -16,3 +16,4 @@ if (!parsedConfig.success) {
 }
 
 export const config = parsedConfig.data
+export type Config = z.infer<typeof configSchema>
