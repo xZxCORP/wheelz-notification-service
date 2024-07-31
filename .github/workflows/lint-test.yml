@@ -4,12 +4,13 @@ on:
   pull_request:
     branches:
       - develop
+      - main
   push:
     branches:
       - main
 
 jobs:
-  lint:
+  lint-and-test:
     runs-on: [self-hosted]
 
     steps:
@@ -21,26 +22,23 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run lint
         run: npm run lint
-
-  test:
-    runs-on: [self-hosted]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-
-      - name: Install dependencies
-        run: npm install
 
       - name: Run tests
         run: npm run test
