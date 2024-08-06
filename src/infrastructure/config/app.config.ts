@@ -1,12 +1,9 @@
 import { Config } from 'effect';
 
-import { RabbitMQConfig, rabbitMqConfig } from './rabbit-mq.config.js';
+import { QueueConfig, queueConfig } from './queue.config.js';
 
 export class AppConfig {
-  constructor(readonly rabbitMq: RabbitMQConfig) {}
+  constructor(readonly queue: QueueConfig) {}
 }
 
-export const appConfig = Config.map(
-  Config.all([rabbitMqConfig]),
-  ([rabbitMq]) => new AppConfig(rabbitMq)
-);
+export const appConfig = Config.map(Config.all([queueConfig]), ([queue]) => new AppConfig(queue));

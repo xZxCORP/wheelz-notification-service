@@ -9,7 +9,7 @@ import {
 } from '../errors/domain.error.js';
 export interface NotificationValidation {
   validate(
-    notification: unknown
+    notification: string
   ): Effect.Effect<
     Notification,
     InvalidNotificationContentError | InvalidRecipientError | UnsupportedNotificationTypeError,
@@ -21,9 +21,9 @@ export class NotificationValidationService extends Context.Tag('NotificationVali
   NotificationValidation
 >() {}
 export class NotificationValidationServiceImpl implements NotificationValidation {
-  validate(notification: unknown) {
+  validate(notification: string) {
     return Effect.try({
-      try: () => notificationSchema.parse(notification),
+      try: () => notificationSchema.parse(JSON.parse(notification)),
       catch: (error) => {
         if (error instanceof z.ZodError) {
           const issues = error.issues;

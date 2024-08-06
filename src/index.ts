@@ -1,39 +1,23 @@
 import * as dotenv from 'dotenv';
-import { Effect, Layer } from 'effect';
+import { Effect } from 'effect';
 
 import { LoggerService } from './application/ports/logger.port.js';
-import {
-  NotificationValidationService,
-  NotificationValidationServiceImpl,
-} from './domain/services/notification-validation.service.js';
-import { EffectLoggerAdapter } from './infrastructure/adapters/effect-logger.adapter.js';
+import { NotificationQueueService } from './application/ports/notification-queue.port.js';
+import { ProcessNotificationUseCaseService } from './application/uses-cases/process-notification.use-case.js';
 import { appConfig } from './infrastructure/config/app.config.js';
+import { MainLive } from './infrastructure/layers/app.layer.js';
 
 dotenv.config();
-const LoggerLive = Layer.succeed(LoggerService, new EffectLoggerAdapter());
-
-const NotificationValidationServiceLive = Layer.succeed(
-  NotificationValidationService,
-  new NotificationValidationServiceImpl()
-);
-
-const AppLive = Layer.merge(LoggerLive, NotificationValidationServiceLive);
 
 const program = Effect.gen(function* () {
-  //   const notificationQueue = yield* _(NotificationQueuePort);
-  //   const processNotificationUseCase = yield* _(ProcessNotificationUseCase);
   const logger = yield* LoggerService;
+  const queue = yield* NotificationQueueService;
+  const processNotificationUseCase = yield* ProcessNotificationUseCaseService;
   const config = yield* appConfig;
-
   yield* logger.info('Starting notification processing');
-  yield* logger.info(config);
 
-  //   yield* _(
-  //     notificationQueue.consume('notifications_queue', (notificationData) =>
-  //       processNotificationUseCase.execute(notificationData)
-  //     )
-  //   );
+  yield* queue.consume(config.queue.name, (data) => processNotificationUseCase.execute(data));
 });
-const runnable = Effect.provide(program, AppLive);
+const runnable = Effect.provide(program, MainLive);
 
 Effect.runPromise(runnable);

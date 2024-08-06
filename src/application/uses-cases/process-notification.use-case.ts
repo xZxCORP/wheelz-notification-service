@@ -1,27 +1,30 @@
-import { Effect } from 'effect';
+import { Context, Effect } from 'effect';
 
-import { NotificationValidationService } from '../../domain/services/notification-validation.service.js';
-import { LoggerService } from '../ports/logger.port.js';
-import { NotificationEmitterService } from '../ports/notification-emitter.port.js';
+import { DomainError } from '../../domain/errors/domain.error.js';
+import { NotificationValidation } from '../../domain/services/notification-validation.service.js';
+import { ApplicationError } from '../errors/application.error.js';
+import { Logger } from '../ports/logger.port.js';
+import { NotificationEmitter } from '../ports/notification-emitter.port.js';
+export interface ProcessNotificationUseCase {
+  execute(notificationData: string): Effect.Effect<void, DomainError | ApplicationError, never>;
+}
+export class ProcessNotificationUseCaseService extends Context.Tag('ProcessNotificationUseCase')<
+  ProcessNotificationUseCase,
+  ProcessNotificationUseCase
+>() {}
+export class ProcessNotificationUseCaseServiceImpl implements ProcessNotificationUseCase {
+  constructor(
+    private logger: Logger,
+    private notificationEmitter: NotificationEmitter,
+    private notificationValidation: NotificationValidation
+  ) {}
+  execute(notificationData: string) {
+    return Effect.gen(this, function* () {
+      yield* this.logger.info(`Processing notification`);
 
-export class ProcessNotificationUseCase {
-  execute(notificationData: unknown) {
-    return Effect.gen(function* () {
-      const logger = yield* LoggerService;
-      const notificationEmitter = yield* NotificationEmitterService;
-      const notificationValidation = yield* NotificationValidationService;
+      const validatedNotification = yield* this.notificationValidation.validate(notificationData);
 
-      yield* logger.info(`Processing notification`);
-
-      const validatedNotification = yield* notificationValidation.validate(notificationData);
-
-      yield* notificationEmitter
-        .emit(validatedNotification)
-        .pipe(
-          Effect.tapError((error) =>
-            logger.error(`Error emitting notification: ${validatedNotification.id}`, error)
-          )
-        );
+      yield* this.notificationEmitter.emit(validatedNotification);
     });
   }
 }

@@ -1,12 +1,12 @@
 import { Context, Effect } from 'effect';
 
-import { Notification } from '../../domain/entities/notification.entity.js';
+import { QueueConnectionFailedError } from '../errors/application.error.js';
 
 export interface NotificationQueue {
   consume(
     queueName: string,
-    callback: (notification: Notification) => Effect.Effect<void, never, never>
-  ): Effect.Effect<void, never, never>;
+    callback: (data: string) => Effect.Effect<void, void, void>
+  ): Effect.Effect<void, QueueConnectionFailedError, never>;
 }
 
 export class NotificationQueueService extends Context.Tag('NotificationQueue')<
