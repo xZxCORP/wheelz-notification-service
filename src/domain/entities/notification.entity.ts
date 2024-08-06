@@ -1,12 +1,10 @@
-import { Schema } from '@effect/schema';
+import { z } from 'zod';
 
-import { senderTypeSchema } from './sender.entity.js';
-
-export const notificationSchema = Schema.Struct({
-  id: Schema.String,
-  type: senderTypeSchema,
-  recipient: Schema.String,
-  content: Schema.String,
+export const notificationSchema = z.object({
+  id: z.string(),
+  type: z.enum(['email']),
+  recipient: z.string().email(),
+  content: z.string().min(1),
 });
 
-export type Notification = Schema.Schema.Type<typeof notificationSchema>;
+export type Notification = z.infer<typeof notificationSchema>;
