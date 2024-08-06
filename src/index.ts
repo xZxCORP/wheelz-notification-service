@@ -1,18 +1,23 @@
-/* eslint-disable unicorn/no-process-exit */
-/* eslint-disable unicorn/prefer-top-level-await */
-import { Application } from './application/application.js'
-import { config } from './config.js'
-import { EmailNotificationEmitter } from './infrastructure/email.notification-emitter.js'
-import { PinoLogger } from './infrastructure/pino.logger.js'
-import { RabbitMQMessageQueue } from './infrastructure/rabbit-mq.message-queue.js'
+import * as dotenv from 'dotenv';
+import { Effect } from 'effect';
 
-const logger = new PinoLogger()
-const emailNotificationEmitter = new EmailNotificationEmitter(logger)
-const rabbitMqMessageQueue = new RabbitMQMessageQueue(config.RABBITMQ_URL)
+import { LoggerService } from './application/ports/logger.port.js';
+import { NotificationQueueService } from './application/ports/notification-queue.port.js';
+import { ProcessNotificationUseCaseService } from './application/uses-cases/process-notification.use-case.js';
+import { appConfig } from './infrastructure/config/app.config.js';
+import { MainLive } from './infrastructure/layers/app.layer.js';
 
-const app = new Application(logger, emailNotificationEmitter, rabbitMqMessageQueue, config)
+dotenv.config();
 
-app.run().catch((error) => {
-  console.error('Application failed to start', error)
-  process.exit(1)
-})
+const program = Effect.gen(function* () {
+  const logger = yield* LoggerService;
+  const queue = yield* NotificationQueueService;
+  const processNotificationUseCase = yield* ProcessNotificationUseCaseService;
+  const config = yield* appConfig;
+  yield* logger.info('Starting notification processing');
+
+  yield* queue.consume(config.queue.name, (data) => processNotificationUseCase.execute(data));
+});
+const runnable = Effect.provide(program, MainLive);
+
+Effect.runPromise(runnable);

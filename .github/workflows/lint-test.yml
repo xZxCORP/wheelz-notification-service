@@ -5,15 +5,6 @@ on:
   pull_request:
     branches:
       - develop
-      - main
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
-      - ".github/**"
-      - "!.github/workflows/**"
 
 jobs:
   lint-and-test:
