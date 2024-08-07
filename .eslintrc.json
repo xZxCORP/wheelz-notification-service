@@ -1,6 +1,7 @@
 {
   "extends": ["@zcorp/eslint-config/app"],
   "rules": {
-    "unicorn/throw-new-error": "off"
+    "unicorn/throw-new-error": "off",
+    "unicorn/no-null": "off"
   }
 }
