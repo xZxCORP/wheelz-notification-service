@@ -15,12 +15,12 @@ export class RabbitMQAdapter implements NotificationQueue {
 
   private assertQueue = () =>
     Effect.tryPromise(() => this.channel.assertQueue(this.config.name)).pipe(
-      Effect.mapError(
-        (error) =>
-          new QueueConnectionFailedError({
-            reason: `Failed to assert queue: ${error}`,
-          })
-      )
+      Effect.mapError((error) => {
+        const errorMessage = error instanceof Error ? error.cause : String(error);
+        return new QueueConnectionFailedError({
+          reason: `Failed to assert queue: ${errorMessage}`,
+        });
+      })
     );
 
   private setupConsumer = (callback: (data: string) => Effect.Effect<void, never, never>) =>

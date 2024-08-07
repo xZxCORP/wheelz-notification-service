@@ -31,21 +31,21 @@ export const createEmailTransporter = (config: MailTransporterConfig, logger: Lo
 
       return transporter;
     }).pipe(
-      Effect.mapError(
-        () =>
-          new EmitterConnectionFailedError({
-            reason: 'Failed to create nodemailer transporter',
-          })
-      )
+      Effect.mapError((error) => {
+        const errorMessage = error instanceof Error ? error.cause : String(error);
+        return new EmitterConnectionFailedError({
+          reason: `Failed to create nodemailer transporter: ${errorMessage}`,
+        });
+      })
     ),
     (transporter) =>
       Effect.sync(() => transporter.close()).pipe(
         Effect.tap(() => logger.info('Nodemailer connection closed successfully')),
         Effect.tapError((error) => logger.error(`Error closing nodemailer connection: ${error}`)),
         Effect.mapError(
-          () =>
+          (error) =>
             new EmitterConnectionFailedError({
-              reason: `Failed to close Nodemailer connection:`,
+              reason: `Failed to close Nodemailer connection: ${error}`,
             })
         ),
         Effect.ignore

@@ -18,12 +18,12 @@ export const createRabbitMQConnection = (config: QueueConfig, logger: Logger) =>
       yield* logger.info('RabbitMQ connection created successfully');
       return connection;
     }).pipe(
-      Effect.mapError(
-        () =>
-          new QueueConnectionFailedError({
-            reason: 'Failed to create RabbitMQ Connection',
-          })
-      )
+      Effect.mapError((error) => {
+        const errorMessage = error instanceof Error ? error.cause : String(error);
+        return new QueueConnectionFailedError({
+          reason: `Failed to create RabbitMQ Connection: ${errorMessage}`,
+        });
+      })
     ),
     (connection) =>
       Effect.promise(() => connection.close()).pipe(
