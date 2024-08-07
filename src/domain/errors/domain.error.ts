@@ -6,12 +6,11 @@ export class InvalidNotificationContentError extends Data.TaggedError(
   content: unknown;
   reason: string;
 }> {}
-
-export class InvalidRecipientError extends Data.TaggedError('InvalidRecipient')<{
-  recipient: string;
-  reason: string;
+export class NotificationDeserializationFailedError extends Data.TaggedError(
+  'NotificationDeserializationFailed'
+)<{
+  rawNotification: string;
 }> {}
-
 export class UnsupportedNotificationTypeError extends Data.TaggedError(
   'UnsupportedNotificationType'
 )<{
@@ -20,5 +19,5 @@ export class UnsupportedNotificationTypeError extends Data.TaggedError(
 
 export type DomainError =
   | InvalidNotificationContentError
-  | InvalidRecipientError
+  | NotificationDeserializationFailedError
   | UnsupportedNotificationTypeError;
