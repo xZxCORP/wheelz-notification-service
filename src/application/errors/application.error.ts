@@ -4,18 +4,9 @@ export class QueueConnectionFailedError extends Data.TaggedError('QueueConnectio
   reason: string;
 }> {}
 
-export class MessageDeserializationFailedError extends Data.TaggedError(
-  'MessageDeserializationFailed'
-)<{
-  rawMessage: string;
-  reason: string;
-}> {}
 export class EmissionFailedError extends Data.TaggedError('EmissionFailed')<{
   notificationId: string;
   reason: string;
 }> {}
 
-export type ApplicationError =
-  | QueueConnectionFailedError
-  | MessageDeserializationFailedError
-  | EmissionFailedError;
+export type ApplicationError = QueueConnectionFailedError | EmissionFailedError;
