@@ -16,7 +16,7 @@ export class NotificationValidationService extends Context.Tag('NotificationVali
   NotificationValidation
 >() {}
 export class NotificationValidationServiceImpl implements NotificationValidation {
-  validate(notification: string): Effect.Effect<Notification, DomainError, never> {
+  validate(notification: string) {
     return Effect.try({
       try: () => {
         const parsedNotification = JSON.parse(notification);
