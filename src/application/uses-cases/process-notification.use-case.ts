@@ -5,7 +5,7 @@ import { NotificationValidation } from '../../domain/services/notification-valid
 import { ApplicationError } from '../errors/application.error.js';
 import { Logger } from '../ports/logger.port.js';
 import { MessageEmitter } from '../ports/message-emitter.port.js';
-import { NotificationTransformer } from '../services/notification-transformer.service.js';
+import { NotificationTransformer } from '../ports/notification-transformer.port.js';
 export interface ProcessNotificationUseCase {
   execute(notificationData: string): Effect.Effect<void, DomainError | ApplicationError, never>;
 }
