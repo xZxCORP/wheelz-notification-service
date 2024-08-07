@@ -18,7 +18,7 @@ export const createEmailTransporter = (config: MailTransporterConfig, logger: Lo
       const transporter = nodemailer.createTransport({
         host: config.host,
         port: config.port,
-        secure: true,
+        secure: config.secure,
         auth: {
           user: config.username,
           pass: Redacted.value(config.password),
