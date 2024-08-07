@@ -1,6 +1,5 @@
 import { Context, Effect } from 'effect';
 
-import { Message } from '../../domain/entities/message.entity.js';
 import { DomainError } from '../../domain/errors/domain.error.js';
 import { NotificationValidation } from '../../domain/services/notification-validation.service.js';
 import { ApplicationError } from '../errors/application.error.js';
