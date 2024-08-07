@@ -23,6 +23,11 @@ export class EmailMessageEmitterAdapter implements MessageEmitter {
       };
       yield* Effect.tryPromise(() => this.transporter.sendMail(mailOptions));
       yield* this.logger.info('Email sent');
-    }).pipe(Effect.mapError(() => new EmissionFailedError({ reason: 'Failed to send email' })));
+    }).pipe(
+      Effect.mapError((error) => {
+        const errorMessage = error instanceof Error ? error.cause : String(error);
+        return new EmissionFailedError({ reason: `Failed to send email: ${errorMessage}` });
+      })
+    );
   }
 }
