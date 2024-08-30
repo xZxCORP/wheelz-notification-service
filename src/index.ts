@@ -21,7 +21,7 @@ async function bootstrap() {
 
   const result = await application.start();
   if (result.isErr()) {
-    console.error('Failed to start application:', result.error);
+    console.error(result.error);
     process.exit(1);
   }
 }

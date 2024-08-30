@@ -1,5 +1,9 @@
-import { AppError } from '../../shared/app.error.js';
-
+import { AppError } from '../../domain/errors/app.error.js';
+export class ManagedResourceError extends AppError {
+  constructor(message: string) {
+    super(message, 'MANAGED_RESOURCE_ERROR');
+  }
+}
 export class QueueError extends AppError {
   constructor(message: string) {
     super(message, 'QUEUE_ERROR');

@@ -15,7 +15,9 @@ export function createZodSchema<T>(zodSchema: z.ZodType<T>): Schema<T> {
   return {
     parse: (data: unknown): Result<T, ValidationError> => {
       const result = zodSchema.safeParse(data);
-      return result.success ? ok(result.data) : err(new ValidationError(result.error.message));
+      return result.success
+        ? ok(result.data)
+        : err(new ValidationError(result.error.name, result.error.errors));
     },
   };
 }

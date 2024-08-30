@@ -13,23 +13,10 @@ export class NotificationService {
   ) {}
 
   start(): ResultAsync<void, NotificationProcessingError> {
-    return ResultAsync.fromPromise(
-      this.runService(),
-      (error): NotificationProcessingError =>
-        new NotificationProcessingError(
-          `Failed to start notification service: ${error instanceof Error ? error.message : 'Unknown error'}`
-        )
-    );
-  }
-
-  private async runService(): Promise<void> {
-    for await (const notificationResult of this.notificationQueue.consume()) {
-      await notificationResult
-        .asyncAndThen((notification) => this.processNotification.execute(notification))
-        .match(
-          () => this.logger.info('Notification processed successfully'),
-          (error) => this.logger.error('Error processing notification:', error)
-        );
-    }
+    return this.notificationQueue.consume(async (notificationResult) => {
+      await notificationResult.asyncAndThen((notification) =>
+        this.processNotification.execute(notification)
+      );
+    });
   }
 }

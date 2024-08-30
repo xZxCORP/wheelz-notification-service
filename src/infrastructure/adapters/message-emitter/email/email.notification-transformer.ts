@@ -34,6 +34,6 @@ export class EmailNotificationTransformer implements NotificationTransformerPort
         new NotificationTransformerError(`Unsupported notification type: ${notification.type}`)
       );
     }
-    return transformer(notification);
+    return transformer(notification.payload);
   }
 }

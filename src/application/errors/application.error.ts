@@ -1,4 +1,4 @@
-import { AppError } from '../../shared/app.error.js';
+import { AppError } from '../../domain/errors/app.error.js';
 
 export class NotificationProcessingError extends AppError {
   constructor(message: string) {

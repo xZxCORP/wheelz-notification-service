@@ -24,7 +24,6 @@ export class NotificationProcessorService implements ProcessNotificationUseCase 
     this.logger.info('Processing notification:', { notification });
     return this.validator
       .validate(this.notificationSchema, notification)
-
       .andThen((notification) => {
         this.logger.debug('Notification validated successfully', { notification });
         return this.notificationTransformer.transform(notification);
@@ -36,15 +35,6 @@ export class NotificationProcessorService implements ProcessNotificationUseCase 
       .asyncAndThen((message) => {
         this.logger.debug('Message validated successfully', { message });
         return this.messageEmitter.send(message);
-      })
-      .map(() => {
-        this.logger.info('Notification processed successfully');
-      })
-      .mapErr((error) => {
-        this.logger.error('Error processing notification:', { error });
-        return new NotificationProcessingError(
-          `Failed to process notification: ${error instanceof Error ? error.message : 'Unknown error'}`
-        );
       });
   }
 }
