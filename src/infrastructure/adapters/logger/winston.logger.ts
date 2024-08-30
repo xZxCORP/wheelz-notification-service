@@ -8,7 +8,10 @@ export class WinstonLogger implements LoggerPort {
   constructor(logLevel: string) {
     this.logger = winston.createLogger({
       level: logLevel,
-      format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.prettyPrint({ colorize: true })
+      ),
       transports: [new winston.transports.Console()],
     });
   }

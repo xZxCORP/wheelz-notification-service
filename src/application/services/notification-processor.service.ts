@@ -1,8 +1,6 @@
-import { ok, Result, ResultAsync } from 'neverthrow';
+import { ResultAsync } from 'neverthrow';
 
-import { Message } from '../../domain/entities/message.entity.js';
 import { Notification } from '../../domain/entities/notification.entity.js';
-import { InvalidMessageError } from '../../domain/errors/domain.error.js';
 import { LoggerPort } from '../../domain/ports/logger.port.js';
 import { MessageEmitterPort } from '../../domain/ports/message-emitter.port.js';
 import { NotificationTransformerPort } from '../../domain/ports/notification-transformer.port.js';

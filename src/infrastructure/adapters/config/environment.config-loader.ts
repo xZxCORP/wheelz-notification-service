@@ -25,8 +25,8 @@ export class EnvironmentConfigLoader implements ConfigLoaderPort {
         host: process.env.MESSAGE_EMITTER_HOST,
         port: process.env.MESSAGE_EMITTER_PORT,
         auth: {
-          username: process.env.MESSAGE_EMITTER_AUTH_USERNAME,
-          password: process.env.MESSAGE_EMITTER_AUTH_PASSWORD,
+          username: process.env.MESSAGE_EMITTER_USERNAME,
+          password: process.env.MESSAGE_EMITTER_PASSWORD,
         },
       },
     };

@@ -30,7 +30,12 @@ export class Application {
   }
   start(): ResultAsync<void, AppError> {
     this.logger.info('Starting application');
-    return this.initialize().map(() => this.logger.info('Application started'));
+    return this.initialize()
+      .map(() => this.logger.info('Application started'))
+      .mapErr((error) => {
+        this.logger.error(`Failed to start application: ${error.message}`);
+        return error;
+      });
   }
   stop(): ResultAsync<void, AppError> {
     this.logger.info('Stopping application');
