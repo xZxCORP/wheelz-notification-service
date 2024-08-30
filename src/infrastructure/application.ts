@@ -41,8 +41,7 @@ export class Application {
     );
     this.notificationService = new NotificationService(
       this.notificationQueue,
-      this.notificationProcessor,
-      this.logger
+      this.notificationProcessor
     );
 
     this.managedResources.push(this.notificationQueue, emailMessageEmitter);

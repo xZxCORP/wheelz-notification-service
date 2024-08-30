@@ -1,6 +1,5 @@
 import { ResultAsync } from 'neverthrow';
 
-import { LoggerPort } from '../../domain/ports/logger.port.js';
 import { NotificationQueuePort } from '../../domain/ports/notification-queue.port.js';
 import { ProcessNotificationUseCase } from '../../domain/use-cases/process-notification.use-case.js';
 import { NotificationProcessingError } from '../errors/application.error.js';
@@ -8,8 +7,7 @@ import { NotificationProcessingError } from '../errors/application.error.js';
 export class NotificationService {
   constructor(
     private notificationQueue: NotificationQueuePort,
-    private processNotification: ProcessNotificationUseCase,
-    private logger: LoggerPort
+    private processNotification: ProcessNotificationUseCase
   ) {}
 
   start(): ResultAsync<void, NotificationProcessingError> {
