@@ -1,23 +1,32 @@
-import * as dotenv from 'dotenv';
-import { Effect } from 'effect';
+import { Application } from './infrastructure/application.js';
 
-import { LoggerService } from './application/ports/logger.port.js';
-import { NotificationQueueService } from './application/ports/notification-queue.port.js';
-import { ProcessNotificationUseCaseService } from './application/uses-cases/process-notification.use-case.js';
-import { appConfig } from './infrastructure/config/app.config.js';
-import { MainLive } from './infrastructure/layers/app.layer.js';
+async function bootstrap() {
+  const applicationResult = Application.create();
+  if (applicationResult.isErr()) {
+    console.error('Failed to create application:', applicationResult.error);
+    process.exit(1);
+  }
+  const application = applicationResult.value;
+  process.on('SIGINT', async () => {
+    console.log('Received SIGINT. Graceful shutdown start');
+    await application.stop();
+    process.exit(0);
+  });
 
-dotenv.config();
+  process.on('SIGTERM', async () => {
+    console.log('Received SIGTERM. Graceful shutdown start');
+    await application.stop();
+    process.exit(0);
+  });
 
-const program = Effect.gen(function* () {
-  const logger = yield* LoggerService;
-  const queue = yield* NotificationQueueService;
-  const processNotificationUseCase = yield* ProcessNotificationUseCaseService;
-  const config = yield* appConfig;
-  yield* logger.info('Starting notification processing');
+  const result = await application.start();
+  if (result.isErr()) {
+    console.error('Failed to start application:', result.error);
+    process.exit(1);
+  }
+}
 
-  yield* queue.consume(config.queue.name, (data) => processNotificationUseCase.execute(data));
+bootstrap().catch((error) => {
+  console.error('Unhandled error:', error);
+  process.exit(1);
 });
-const runnable = Effect.provide(program, MainLive);
-
-Effect.runPromise(runnable);

@@ -1,15 +1,7 @@
-import { Data } from 'effect';
+import { AppError } from '../../shared/app.error.js';
 
-export class QueueConnectionFailedError extends Data.TaggedError('QueueConnectionFailed')<{
-  reason: string;
-}> {}
-
-export class EmitterConnectionFailedError extends Data.TaggedError('EmitterConnectionFailed')<{
-  reason: string;
-}> {}
-
-export class EmissionFailedError extends Data.TaggedError('EmissionFailed')<{
-  reason: string;
-}> {}
-
-export type ApplicationError = QueueConnectionFailedError | EmissionFailedError;
+export class NotificationProcessingError extends AppError {
+  constructor(message: string) {
+    super(message, 'NOTIFICATION_PROCESSING_ERROR');
+  }
+}
