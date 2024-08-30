@@ -1,23 +1,24 @@
-import { Data } from 'effect';
+import { AppError } from './app.error.js';
+export class ValidationError extends AppError {
+  constructor(message: string, cause: unknown) {
+    super(message, 'VALIDATION_ERROR');
+    this.cause = cause;
+  }
+}
+export class NotificationTransformerError extends AppError {
+  constructor(message: string) {
+    super(message, 'NOTIFICATION_TRANSFORMER_ERROR');
+  }
+}
 
-export class InvalidNotificationContentError extends Data.TaggedError(
-  'InvalidNotificationContent'
-)<{
-  content: unknown;
-  reason: string;
-}> {}
-export class NotificationDeserializationFailedError extends Data.TaggedError(
-  'NotificationDeserializationFailed'
-)<{
-  rawNotification: string;
-}> {}
-export class UnsupportedNotificationTypeError extends Data.TaggedError(
-  'UnsupportedNotificationType'
-)<{
-  type: string;
-}> {}
+export class InvalidNotificationError extends AppError {
+  constructor(message: string) {
+    super(message, 'INVALID_NOTIFICATION');
+  }
+}
 
-export type DomainError =
-  | InvalidNotificationContentError
-  | NotificationDeserializationFailedError
-  | UnsupportedNotificationTypeError;
+export class InvalidMessageError extends AppError {
+  constructor(message: string) {
+    super(message, 'INVALID_MESSAGE');
+  }
+}
