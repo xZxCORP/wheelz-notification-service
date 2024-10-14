@@ -1,9 +1,13 @@
-import { err, ok, Result } from 'neverthrow';
+import type { Result } from 'neverthrow';
+import { err, ok } from 'neverthrow';
 
-import { Message } from '../../../../domain/entities/message.entity.js';
-import { NewUserPayload, Notification } from '../../../../domain/entities/notification.entity.js';
+import type { Message } from '../../../../domain/entities/message.entity.js';
+import type {
+  NewUserPayload,
+  Notification,
+} from '../../../../domain/entities/notification.entity.js';
 import { NotificationTransformerError } from '../../../../domain/errors/domain.error.js';
-import { NotificationTransformerPort } from '../../../../domain/ports/notification-transformer.port.js';
+import type { NotificationTransformerPort } from '../../../../domain/ports/notification-transformer.port.js';
 import { emailTemplate } from './templates/base.template.js';
 import { newUserEmailContent } from './templates/new-user.template.js';
 

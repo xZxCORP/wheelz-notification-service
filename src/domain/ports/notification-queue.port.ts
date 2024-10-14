@@ -1,7 +1,7 @@
-import { Result, ResultAsync } from 'neverthrow';
+import type { Result, ResultAsync } from 'neverthrow';
 
-import { QueueError } from '../../infrastructure/errors/infrastructure.error.js';
-import { Notification } from '../entities/notification.entity.js';
+import type { QueueError } from '../../infrastructure/errors/infrastructure.error.js';
+import type { Notification } from '../entities/notification.entity.js';
 
 export interface NotificationQueuePort {
   consume(

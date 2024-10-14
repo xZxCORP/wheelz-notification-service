@@ -1,13 +1,14 @@
 import amqp from 'amqplib';
-import { err, errAsync, ok, okAsync, Result, ResultAsync } from 'neverthrow';
+import type { Result } from 'neverthrow';
+import { err, errAsync, ok, okAsync, ResultAsync } from 'neverthrow';
 
-import { Config } from '../../../../domain/entities/config.entity.js';
-import { Notification } from '../../../../domain/entities/notification.entity.js';
-import { AppError } from '../../../../domain/errors/app.error.js';
-import { LoggerPort } from '../../../../domain/ports/logger.port.js';
-import { NotificationQueuePort } from '../../../../domain/ports/notification-queue.port.js';
+import type { Config } from '../../../../domain/entities/config.entity.js';
+import type { Notification } from '../../../../domain/entities/notification.entity.js';
+import type { AppError } from '../../../../domain/errors/app.error.js';
+import type { LoggerPort } from '../../../../domain/ports/logger.port.js';
+import type { NotificationQueuePort } from '../../../../domain/ports/notification-queue.port.js';
 import { QueueError } from '../../../errors/infrastructure.error.js';
-import { ManagedResource } from '../../../managed.resource.js';
+import type { ManagedResource } from '../../../managed.resource.js';
 export class RabbitMQNotificationQueue implements ManagedResource, NotificationQueuePort {
   private connection: amqp.Connection | null = null;
   private channel: amqp.Channel | null = null;

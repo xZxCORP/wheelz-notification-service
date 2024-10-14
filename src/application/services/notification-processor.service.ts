@@ -1,14 +1,14 @@
-import { ResultAsync } from 'neverthrow';
+import type { ResultAsync } from 'neverthrow';
 
-import { Notification } from '../../domain/entities/notification.entity.js';
-import { LoggerPort } from '../../domain/ports/logger.port.js';
-import { MessageEmitterPort } from '../../domain/ports/message-emitter.port.js';
-import { NotificationTransformerPort } from '../../domain/ports/notification-transformer.port.js';
-import { MessageSchema } from '../../domain/schemas/message.schema.js';
-import { NotificationSchema } from '../../domain/schemas/notification.schema.js';
-import { ProcessNotificationUseCase } from '../../domain/use-cases/process-notification.use-case.js';
-import { Validator } from '../../domain/validation/validator.js';
-import { NotificationProcessingError } from '../errors/application.error.js';
+import type { Notification } from '../../domain/entities/notification.entity.js';
+import type { LoggerPort } from '../../domain/ports/logger.port.js';
+import type { MessageEmitterPort } from '../../domain/ports/message-emitter.port.js';
+import type { NotificationTransformerPort } from '../../domain/ports/notification-transformer.port.js';
+import type { MessageSchema } from '../../domain/schemas/message.schema.js';
+import type { NotificationSchema } from '../../domain/schemas/notification.schema.js';
+import type { ProcessNotificationUseCase } from '../../domain/use-cases/process-notification.use-case.js';
+import type { Validator } from '../../domain/validation/validator.js';
+import type { NotificationProcessingError } from '../errors/application.error.js';
 
 export class NotificationProcessorService implements ProcessNotificationUseCase {
   constructor(

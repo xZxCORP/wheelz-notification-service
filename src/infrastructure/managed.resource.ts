@@ -1,6 +1,6 @@
-import { ResultAsync } from 'neverthrow';
+import type { ResultAsync } from 'neverthrow';
 
-import { AppError } from '../domain/errors/app.error.js';
+import type { AppError } from '../domain/errors/app.error.js';
 
 export interface ManagedResource {
   initialize(): ResultAsync<void, AppError>;

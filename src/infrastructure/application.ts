@@ -1,11 +1,12 @@
-import { okAsync, Result, ResultAsync } from 'neverthrow';
+import type { Result } from 'neverthrow';
+import { okAsync, ResultAsync } from 'neverthrow';
 
 import { NotificationService } from '../application/services/notification.service.js';
 import { NotificationProcessorService } from '../application/services/notification-processor.service.js';
-import { Config } from '../domain/entities/config.entity.js';
-import { AppError } from '../domain/errors/app.error.js';
-import { LoggerPort } from '../domain/ports/logger.port.js';
-import { ProcessNotificationUseCase } from '../domain/use-cases/process-notification.use-case.js';
+import type { Config } from '../domain/entities/config.entity.js';
+import type { AppError } from '../domain/errors/app.error.js';
+import type { LoggerPort } from '../domain/ports/logger.port.js';
+import type { ProcessNotificationUseCase } from '../domain/use-cases/process-notification.use-case.js';
 import { EnvironmentConfigLoader } from './adapters/config/environment.config-loader.js';
 import { PinoLogger } from './adapters/logger/pino.logger.js';
 import { EmailMessageEmitter } from './adapters/message-emitter/email/email.message-emitter.js';
@@ -15,7 +16,7 @@ import { ZodValidator } from './adapters/validation/zod/zod.validator.js';
 import { configSchema } from './adapters/validation/zod/zod-config.schema.js';
 import { messageSchema } from './adapters/validation/zod/zod-message.schema.js';
 import { notificationSchema } from './adapters/validation/zod/zod-notification.schema.js';
-import { ManagedResource } from './managed.resource.js';
+import type { ManagedResource } from './managed.resource.js';
 
 export class Application {
   private managedResources: ManagedResource[] = [];

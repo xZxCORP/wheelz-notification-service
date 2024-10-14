@@ -1,11 +1,11 @@
 import { configDotenv } from 'dotenv';
-import { Result } from 'neverthrow';
+import type { Result } from 'neverthrow';
 
-import { Config } from '../../../domain/entities/config.entity.js';
-import { ValidationError } from '../../../domain/errors/domain.error.js';
-import { ConfigLoaderPort } from '../../../domain/ports/config-loader.port.js';
-import { ConfigSchema } from '../../../domain/schemas/config.schema.js';
-import { Validator } from '../../../domain/validation/validator.js';
+import type { Config } from '../../../domain/entities/config.entity.js';
+import type { ValidationError } from '../../../domain/errors/domain.error.js';
+import type { ConfigLoaderPort } from '../../../domain/ports/config-loader.port.js';
+import type { ConfigSchema } from '../../../domain/schemas/config.schema.js';
+import type { Validator } from '../../../domain/validation/validator.js';
 
 export class EnvironmentConfigLoader implements ConfigLoaderPort {
   constructor(

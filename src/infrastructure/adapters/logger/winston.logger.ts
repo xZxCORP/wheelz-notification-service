@@ -1,6 +1,6 @@
 import winston from 'winston';
 
-import { LoggerPort } from '../../../domain/ports/logger.port.js';
+import type { LoggerPort } from '../../../domain/ports/logger.port.js';
 
 export class WinstonLogger implements LoggerPort {
   private logger: winston.Logger;

@@ -1,7 +1,7 @@
-import { Result } from 'neverthrow';
+import type { Result } from 'neverthrow';
 
-import { Config } from '../entities/config.entity.js';
-import { ValidationError } from '../errors/domain.error.js';
+import type { Config } from '../entities/config.entity.js';
+import type { ValidationError } from '../errors/domain.error.js';
 
 export interface ConfigLoaderPort {
   load(): Result<Config, ValidationError>;
