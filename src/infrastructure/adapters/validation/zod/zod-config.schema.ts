@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { Config } from '../../../../domain/entities/config.entity.js';
+import type { Config } from '../../../../domain/entities/config.entity.js';
 import { createZodSchema } from './zod.validator.js';
 const configZodSchema = z.object({
   logLevel: z.enum(['error', 'warn', 'info', 'debug']),

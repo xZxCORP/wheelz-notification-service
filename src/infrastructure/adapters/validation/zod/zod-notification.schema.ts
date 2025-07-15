@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { Notification } from '../../../../domain/entities/notification.entity.js';
+import type { Notification } from '../../../../domain/entities/notification.entity.js';
 import { createZodSchema } from './zod.validator.js';
 const baseNotificationSchema = z.object({
   type: z.string(),

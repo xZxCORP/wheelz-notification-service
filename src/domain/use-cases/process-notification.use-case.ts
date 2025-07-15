@@ -1,7 +1,7 @@
-import { ResultAsync } from 'neverthrow';
+import type { ResultAsync } from 'neverthrow';
 
-import { NotificationProcessingError } from '../../application/errors/application.error.js';
-import { Notification } from '../entities/notification.entity.js';
+import type { NotificationProcessingError } from '../../application/errors/application.error.js';
+import type { Notification } from '../entities/notification.entity.js';
 
 export interface ProcessNotificationUseCase {
   execute(notification: Notification): ResultAsync<void, NotificationProcessingError>;

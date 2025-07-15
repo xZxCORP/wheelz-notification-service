@@ -1,9 +1,10 @@
-import { err, ok, Result } from 'neverthrow';
-import z from 'zod';
+import type { Result } from 'neverthrow';
+import { err, ok } from 'neverthrow';
+import type z from 'zod';
 
 import { ValidationError } from '../../../../domain/errors/domain.error.js';
-import { Schema } from '../../../../domain/validation/schema.js';
-import { Validator } from '../../../../domain/validation/validator.js';
+import type { Schema } from '../../../../domain/validation/schema.js';
+import type { Validator } from '../../../../domain/validation/validator.js';
 
 export class ZodValidator implements Validator {
   validate<T>(schema: Schema<T>, data: unknown): Result<T, ValidationError> {

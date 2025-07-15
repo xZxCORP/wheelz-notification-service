@@ -1,12 +1,12 @@
 import { errAsync, okAsync, ResultAsync } from 'neverthrow';
 import nodemailer from 'nodemailer';
 
-import { Config } from '../../../../domain/entities/config.entity.js';
-import { Message } from '../../../../domain/entities/message.entity.js';
-import { LoggerPort } from '../../../../domain/ports/logger.port.js';
-import { MessageEmitterPort } from '../../../../domain/ports/message-emitter.port.js';
+import type { Config } from '../../../../domain/entities/config.entity.js';
+import type { Message } from '../../../../domain/entities/message.entity.js';
+import type { LoggerPort } from '../../../../domain/ports/logger.port.js';
+import type { MessageEmitterPort } from '../../../../domain/ports/message-emitter.port.js';
 import { MessageEmitterError } from '../../../errors/infrastructure.error.js';
-import { ManagedResource } from '../../../managed.resource.js';
+import type { ManagedResource } from '../../../managed.resource.js';
 export class EmailMessageEmitter implements ManagedResource, MessageEmitterPort {
   private transporter: nodemailer.Transporter | null = null;
 

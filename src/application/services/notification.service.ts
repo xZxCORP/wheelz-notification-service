@@ -1,8 +1,8 @@
-import { ResultAsync } from 'neverthrow';
+import type { ResultAsync } from 'neverthrow';
 
-import { NotificationQueuePort } from '../../domain/ports/notification-queue.port.js';
-import { ProcessNotificationUseCase } from '../../domain/use-cases/process-notification.use-case.js';
-import { NotificationProcessingError } from '../errors/application.error.js';
+import type { NotificationQueuePort } from '../../domain/ports/notification-queue.port.js';
+import type { ProcessNotificationUseCase } from '../../domain/use-cases/process-notification.use-case.js';
+import type { NotificationProcessingError } from '../errors/application.error.js';
 
 export class NotificationService {
   constructor(
